@@ -11,7 +11,7 @@ contract AtomicSwap {
     struct Swap {
         uint startTimestamp;
         uint refundPeriod;
-        bytes20 hashedSecret;
+        bytes32 hashedSecret;
         bytes32 secret;
         address initiator;
         address participant;
@@ -20,20 +20,20 @@ contract AtomicSwap {
         State state;
     }
 
-    mapping(bytes20 => Swap) public swaps;
+    mapping(bytes32 => Swap) public swaps;
 
     event Refunded(uint _refundTime);
     event Redeemed(uint _redeemTime);
     event Participated(
         address _initiator, 
         address _participant,
-        bytes20 _hashedSecret,
+        bytes32 _hashedSecret,
         uint256 _value
     );
     event Initiated(
         uint _initTimestamp,
         uint _refundTime,
-        bytes20 _hashedSecret,
+        bytes32 _hashedSecret,
         address _participant,
         address _initiator,
         uint256 _funds
@@ -41,30 +41,30 @@ contract AtomicSwap {
 
     constructor () public {}
 
-    modifier isRefundable(bytes20 _hashedSecret) {
+    modifier isRefundable(bytes32 _hashedSecret) {
         require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].refundPeriod);
         require(swaps[_hashedSecret].emptied == false);
         _;
     }
 
-    modifier isRedeemable(bytes20 _hashedSecret, bytes32 _secret) {
-        require(ripemd160(abi.encodePacked(_secret)) == _hashedSecret);
+    modifier isRedeemable(bytes32 _hashedSecret, bytes32 _secret) {
+        require(sha256(abi.encodePacked(_secret)) == _hashedSecret);
         require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].refundPeriod);
         require(swaps[_hashedSecret].emptied == false);
         _;
     }
 
-    modifier isInitiator(bytes20 _hashedSecret) {
+    modifier isInitiator(bytes32 _hashedSecret) {
         require(msg.sender == swaps[_hashedSecret].initiator);
         _;
     }
 
-    modifier isNotInitiated(bytes20 _hashedSecret) {
+    modifier isNotInitiated(bytes32 _hashedSecret) {
         require(swaps[_hashedSecret].state == State.Empty);
         _;
     }
 
-    function initiate(uint _refundPeriod, bytes20 _hashedSecret, address _participant) 
+    function initiate(uint _refundPeriod, bytes32 _hashedSecret, address _participant) 
         external
         payable
         isNotInitiated(_hashedSecret)
@@ -86,7 +86,7 @@ contract AtomicSwap {
         );
     }
 
-    function participate(uint _refundPeriod, bytes20 _hashedSecret, address _initiator)
+    function participate(uint _refundPeriod, bytes32 _hashedSecret, address _initiator)
         external
         payable
         isNotInitiated(_hashedSecret)
@@ -106,7 +106,7 @@ contract AtomicSwap {
         );
     }
 
-    function redeem(bytes32 _secret, bytes20 _hashedSecret)
+    function redeem(bytes32 _secret, bytes32 _hashedSecret)
         external
         isRedeemable(_hashedSecret, _secret)
     {
@@ -121,7 +121,7 @@ contract AtomicSwap {
         emit Redeemed(now);
     }
 
-    function refund(bytes20 _hashedSecret)
+    function refund(bytes32 _hashedSecret)
         external
         isRefundable(_hashedSecret)
     {
