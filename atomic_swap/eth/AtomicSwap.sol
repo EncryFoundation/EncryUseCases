@@ -10,7 +10,7 @@ contract AtomicSwap {
 
     struct Swap {
         uint startTimestamp;
-        uint refundPeriod;
+        uint redemptionPeriod;
         bytes32 hashedSecret;
         bytes32 secret;
         address initiator;
@@ -42,14 +42,14 @@ contract AtomicSwap {
     constructor () public {}
 
     modifier isRefundable(bytes32 _hashedSecret) {
-        require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].refundPeriod);
+        require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].redemptionPeriod);
         require(swaps[_hashedSecret].emptied == false);
         _;
     }
 
     modifier isRedeemable(bytes32 _hashedSecret, bytes32 _secret) {
         require(sha256(abi.encodePacked(_secret)) == _hashedSecret);
-        require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].refundPeriod);
+        require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].redemptionPeriod);
         require(swaps[_hashedSecret].emptied == false);
         _;
     }
@@ -69,7 +69,7 @@ contract AtomicSwap {
         payable
         isNotInitiated(_hashedSecret)
     {
-        swaps[_hashedSecret].refundPeriod = _refundPeriod;
+        swaps[_hashedSecret].redemptionPeriod = _refundPeriod;
         swaps[_hashedSecret].startTimestamp = now;
         swaps[_hashedSecret].hashedSecret = _hashedSecret;
         swaps[_hashedSecret].participant = _participant;
@@ -91,7 +91,7 @@ contract AtomicSwap {
         payable
         isNotInitiated(_hashedSecret)
     {
-        swaps[_hashedSecret].refundPeriod = _refundPeriod;
+        swaps[_hashedSecret].redemptionPeriod = _refundPeriod;
         swaps[_hashedSecret].startTimestamp = now;
         swaps[_hashedSecret].participant = msg.sender;
         swaps[_hashedSecret].initiator = _initiator;
