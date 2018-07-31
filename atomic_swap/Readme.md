@@ -5,6 +5,7 @@ Cross-chain swap require each party to pay into a contract transaction, one cont
 The contracts contain an output that is spendable by either party, but the rules required for redemption are different for each party involved.
 
 Illustration for the steps each party performs and the transfer of data between each party.
+
 <img src="img/workflow.svg" width="100%" height=650 />
 
-Swap algorithm is taken from [Descred](https://github.com/decred/atomicswap)
+Swap algorithm is taken from [Decred](https://github.com/decred/atomicswap)
