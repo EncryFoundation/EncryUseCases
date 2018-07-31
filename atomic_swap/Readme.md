@@ -8,4 +8,4 @@ Illustration for the steps each party performs and the transfer of data between 
 
 <img src="img/workflow.svg" width="100%" height=650 />
 
-Swap algorithm is taken from [Decred](https://github.com/decred/atomicswap)
+Detailed algrithm description [Decred](https://github.com/decred/atomicswap)
