@@ -1,0 +1,12 @@
+contract (state: State, tx: Transaction, secret: Array[Byte]) = {
+    let secretHash         = hex"0b3d5842c1dce1d239997d5ea1e59b31767c372242395f34fdb0d7d94e967773"
+    let opponentAddress    = hex"a5859ff04cec9e6888ba8f92e5bab81b9fe044ac3b97ea56e33b12f575fa78bc"
+    let tokenId            = hex"0f15f0e0e8cba2ad238904825bdc8a6413cbc08c4982f4aa654a87d506f2e17e"
+    let amount             = 109000
+    let redemptionDeadline = 1532954600875 // Timestamp
+    sha256(secret) == secretHash && tx.outputs.exists(lamb (bx: Box) = if (let assetBx: AssetBox = bx) {
+        assetBx.tokenId == intrinsicTokenId &&
+        assetBx.contractHash == opponentAddress &&
+        assetBx.amount >= amount
+    } else false) || (sha256(secret) == secretHash && state.lastBlockTimestamp > redemptionDeadline)
+}
