@@ -39,8 +39,6 @@ contract AtomicSwap {
         uint256 _funds
     );
 
-    constructor () public {}
-
     modifier isRefundable(bytes32 _hashedSecret) {
         require(now > swaps[_hashedSecret].startTimestamp + swaps[_hashedSecret].redemptionPeriod);
         require(swaps[_hashedSecret].emptied == false);
