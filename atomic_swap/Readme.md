@@ -84,6 +84,7 @@ The output should looks as follows:
 Initiator (on Encry side):
 
 - Run `python3 ./utils/secret_gen.py`.
+
 The output should looks as follows:
 
     Secret: 
@@ -92,6 +93,7 @@ The output should looks as follows:
     98a4616057d0c56d680195014231975e4b992c74c1cf6d23c97af350458894e2
 
 - Run `python3 ./utils/atomic_swap_contract.py <hashed_secret> <participant_addr_p2sh> <amount> <redemption_deadline> <token_id_hex>[OPTIONAL]`.
+
 Example: `python3 ./atomic_swap_contract.py 98a4616057d0c56d680195014231975e4b992c74c1cf6d23c97af350458894e2 ABoqbCE7zuLMxd7nTej7xyP2x23xrKcKDopnVW59b1NNXdrnRqX 10 1546169038`
 
 - Create scripted transaction from EncryWallet pasting the output of the pevious command to the `contract` field.
@@ -103,6 +105,7 @@ Participant (on Ethereum side)
 Participant (on Encry side):
 
 - Run `python3 ./utils/atomic_swap_contract.py <hashed_secret> <participant_addr_p2sh> <amount> <redemption_deadline> <token_id_hex>[OPTIONAL]`.
+
 Example: `python3 ./atomic_swap_contract.py 98a4616057d0c56d680195014231975e4b992c74c1cf6d23c97af350458894e2 ABoqbCE7zuLMxd7nTej7xyP2x23xrKcKDopnVW59b1NNXdrnRqX 10 1546169038`
 
 - Create scripted transaction from EncryWallet pasting the output of the pevious command to the `contract` field.
