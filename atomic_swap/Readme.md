@@ -16,12 +16,14 @@ Detailed algorithm description [Decred](https://github.com/decred/atomicswap)
 For OSX:
 
 `brew tap ethereum/ethereum`
+
 `brew install ethereum`
 
 2. Install [Mist](https://github.com/ethereum/mist/releases)
 3. Create directory for new private chain
 
 `mkdir myChain`
+
 `cd myChain`
 
 4. Create genesis config and data directory
@@ -31,23 +33,23 @@ For OSX:
 Specify chain params in the file. In `alloc` section specify testing accounts you are already have access to.
 
     {
-    "config": {
-        "chainId": 1114,
-        "homesteadBlock": 0,
-        "eip155Block": 0,
-        "eip158Block": 0,
-        "byzantiumBlock": 0
-    },
-    "difficulty": "400",
-    "gasLimit": "2000000",
-    "alloc": {
-        "965f548064b53848af13059e553fc1f39ffea766": { 
-            "balance": "100000000000000000000000" 
+        "config": {
+            "chainId": 1114,
+            "homesteadBlock": 0,
+            "eip155Block": 0,
+            "eip158Block": 0,
+            "byzantiumBlock": 0
         },
-        "15c096476dafa698862f39c009aa0d5cf6d91cba": { 
-            "balance": "120000000000000000000000" 
+        "difficulty": "400",
+        "gasLimit": "2000000",
+        "alloc": {
+            "965f548064b53848af13059e553fc1f39ffea766": { 
+                "balance": "100000000000000000000000" 
+            },
+            "15c096476dafa698862f39c009aa0d5cf6d91cba": { 
+                "balance": "120000000000000000000000" 
+            }
         }
-    }
     }
     
 `mkdir dataDir`
