@@ -111,3 +111,7 @@ Example: `python3 ./atomic_swap_contract.py 98a4616057d0c56d680195014231975e4b99
 - Create scripted transaction from EncryWallet pasting the output of the pevious command to the `contract` field.
 
 Done! Contracts are deployed, now you are to simply stick to the atomic swap protocol described above.
+
+#### Troublesooting
+
+Geth may fail to start mining if etherbase account not specified. To specify it attach to running geth node `geth attach ./dataDir/geth.ipc`, check whether you have active accounts `eth.accounts` and run `miner.setEtherbase(web3.eth.accounts[0])`.
