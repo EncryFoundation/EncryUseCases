@@ -14,21 +14,25 @@ Detailed algorithm description [Decred](https://github.com/decred/atomicswap)
 
 1. Install `geth`
 For OSX:
+
 `brew tap ethereum/ethereum`
 `brew install ethereum`
 
 2. Install [Mist](https://github.com/ethereum/mist/releases)
 3. Create directory for new private chain
+
 `mkdir myChain`
 `cd myChain`
+
 4. Create genesis config and data directory
 
 `touch myGenesis.json`
-Specify chain params in the file. In `alloc` section specify testing account you are already have access to.
+
+Specify chain params in the file. In `alloc` section specify testing accounts you are already have access to.
 
     {
     "config": {
-        "chainId": 1994,
+        "chainId": 1114,
         "homesteadBlock": 0,
         "eip155Block": 0,
         "eip158Block": 0,
@@ -49,12 +53,15 @@ Specify chain params in the file. In `alloc` section specify testing account you
 `mkdir dataDir`
 
 5. Init new chain
+
 `geth --datadir ./dataDir init ./privateGenesis.json`
 
 6. Run local ethereum node
+
 `geth --ws  --wsaddr "0.0.0.0" --wsapi "eth,net,web3,admin,shh" --wsorigins "*" --mine --minerthreads=1 --datadir ./dataDir/ --networkid 1114`
 
 7. Run Mist pointing it to the local network
+
 `open '/Applications/Ethereum Wallet.app' --args --node-networkid 1114 --rpc http://127.0.0.1:8545`
 
 8. Deploy solidity contract from `./eth/AtomicSwap.sol` from mist
@@ -62,6 +69,7 @@ Specify chain params in the file. In `alloc` section specify testing account you
 Initiator (on Ethereum side):
 
 - Run `python3 ./utils/secret_gen.py`.
+
 The output should looks as follows:
 
     Secret: 
